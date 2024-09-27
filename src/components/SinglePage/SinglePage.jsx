@@ -1,39 +1,36 @@
-// import { useEffect } from "react";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { MdPadding } from "react-icons/md";
+import { TbTruckDelivery, TbReplaceFilled } from "react-icons/tb";
+import { MdOutlineSecurity } from "react-icons/md";
+
 import {
   AppContext,
   AppProvider,
   counterContext,
 } from "/src/components/Context/Context.jsx";
 
-var i = 0;
 const SinglePage = () => {
   const [data, setData] = useState([]);
   const currentUrl = window.location.href;
   const id = currentUrl.split("singlepage/")[1];
 
   const getProducts = async () => {
-    // dispatch({ type: "SET_LOADING" });
     const URL = `https://api.pujakaitem.com/api/products/${id}`;
 
     try {
       const res = await axios.get(URL);
       const singleProduct = await res.data;
-      console.log(singleProduct);
       setData(singleProduct);
-      // console.log(singleProduct.image[0].url);
     } catch (error) {
       console.log(`the red ${error}`);
     }
     return data;
   };
-  // console.log(data.image[0].url);
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [{ id }]);
 
   let value = useContext(counterContext);
 
@@ -45,6 +42,20 @@ const SinglePage = () => {
     value.setCount((prevcount) => Number(prevcount) - 1);
   }
 
+  const [currImg, setCurrImg] = useState(
+    data?.image ? data.image[0].url : null
+  );
+
+  const formatToINR = (amount) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 2, // For showing two decimal places
+    }).format(amount);
+  };
+
+  // console.log(data)
+
   return (
     <div className=" flex my-4 h-full items-center justify-center">
       <div className="text-center">
@@ -54,7 +65,7 @@ const SinglePage = () => {
           <div className="font-thin text-center text-4xl"> Loading...</div>
         )}
 
-        <div className=" flex flex-row items items-center m-auto  xs:flex-col">
+        <div className=" flex flex-row  items-center m-auto  xs:flex-col">
           {/* Images List */}
           <div className="image-gallery flex ">
             <div>
@@ -67,6 +78,7 @@ const SinglePage = () => {
                       alt={`Product Image ${index + 1}`}
                       width="130"
                       height="130"
+                      onClick={() => setCurrImg(img.url)}
                     />
                   </figure>
                 ))
@@ -77,32 +89,74 @@ const SinglePage = () => {
             <div className="items-center justify-center flex mr-4 ">
               {data?.image && (
                 <figure>
-                  <img className="ml-4 xs:h-[130px] " src={data.image[0].url} width="200" height="200" />
+                  <img
+                    className="ml-4 xs:h-[130px] "
+                    src={currImg ? currImg : data.image[0].url}
+                    width="200"
+                    height="200"
+                  />
                 </figure>
               )}
             </div>
           </div>
           {/* Product details */}
-          <div className="flex flex-row text-start xs:mt-4">
+          <div className="flex flex-row text-start xs:mt-4  ">
             <div className=" w-[350px] ">
-              <h1 className="text-3xl xs:text-5xl xs:mb-2 text-gray-500">{data.name}</h1>
+              <h1 className="text-3xl xs:text-5xl xs:mb-2 mb-2 text-gray-500">
+                {data.name}
+              </h1>
+              {/* <div>
+                <span className="text-sky-800">{data.stars} Ratings</span>
+              </div> */}
+
               <p className="text-red-300">
-                M.R.P : ₹
+                M.R.P :
                 <span className="line-through font-semibold ">
-                  {data.price}
+                  {formatToINR(data.price / 10 + 2500)}
                 </span>{" "}
               </p>
               <p className="text-orange-700 text-sm font-semibold">
-                Deal of the day: ₹{data.price / 50}
+                Deal of the day: {formatToINR(data.price / 10)}
               </p>
 
               <p className="w-72 font-thin text-sm "> {data.description}</p>
+
+              <div className="flex  my-2 justify-between mr-4 border-b-2 pb-2">
+                <div className="flex flex-col justify-center w-fit">
+                  <TbTruckDelivery className=" m-auto" size="20px" />
+                  <p className="font-thin text-xs">Free Delivery</p>
+                </div>
+
+                <div className="flex flex-col items-center justify-center w-fit">
+                  <TbReplaceFilled size="20px" />
+                  <p className="font-thin text-xs">7 Days Replacement</p>
+                </div>
+
+                <div className="flex flex-col items-center justify-center  w-fit">
+                  <MdOutlineSecurity size="20px" />
+                  <p className="font-thin text-xs">2 Year Warranty</p>
+                </div>
+              </div>
               <p>
                 Available :{" "}
                 <span className="font-semibold">
-                  {data.shipping ? "In stock" : "Out of stock"}
+                  {data.shipping ? (
+                    <span className="text-green-700">In stock</span>
+                  ) : (
+                    <span className="text-red-700">Currently unavailable.</span>
+                  )}
                 </span>
               </p>
+
+              <p>
+                {data.shipping ? (
+                  <span className="text-red-700">
+                    {" "}
+                    Only {data.stock} left in stock
+                  </span>
+                ) : null}
+              </p>
+
               <p>
                 ID : <span className="font-semibold">{data.id}</span>
               </p>
@@ -112,7 +166,7 @@ const SinglePage = () => {
               <hr style={{ border: "1px solid #000", margin: "10px 0" }} />
 
               <div>
-                {data?.colors && (
+                {data?.shipping && (
                   <p className="flex flex-row gap-2 mb-1">
                     Color:
                     <div

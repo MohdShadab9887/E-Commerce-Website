@@ -10,6 +10,15 @@ function Product(curElem) {
     const { id, image, name, price } = curElem;
 
 
+    const formatToINR = (amount) => {
+      return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 2, // For showing two decimal places
+      }).format(amount);
+    };
+    
+
 return (
   <NavLink to={`/singlepage/${id}`}>
     <div
@@ -26,7 +35,7 @@ return (
       justify-between mx-2  "
       >
         <div> {name}</div>
-        <div className="text-cyan-600"> ₹{price / 50}</div>
+        <div className="text-cyan-600"> {formatToINR(price/100)}</div>
       </div>
     </div>
   </NavLink>

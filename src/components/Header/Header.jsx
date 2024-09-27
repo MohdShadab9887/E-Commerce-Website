@@ -70,7 +70,7 @@ export default function Header({ count, setCount }) {
                 </NavLink>
               </li>
 
-              <li>
+              {/* <li>
                 <NavLink
                   to="/about"
                   className={({ isActive }) =>
@@ -81,7 +81,7 @@ export default function Header({ count, setCount }) {
                 >
                   About
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink
                   to="/contact"
