@@ -14,10 +14,10 @@ function Shop() {
   }, [products]);
 
   useEffect(() => {
-    const filteredData = products.filter((product) => 
-      product.name.toLowerCase().includes(searchText.toLowerCase())
-  );
-    setsortedData(filteredData)
+    const filteredData = products.filter((product) =>
+      product.name.toLowerCase().includes(searchText.toLowerCase()),
+    );
+    setsortedData(filteredData);
   }, [products, searchText]);
 
   if (isLoading) {
@@ -115,9 +115,13 @@ function Shop() {
         </div> */}
         {/* w-4/6 */}
         <div className="flex flex-wrap justify-center">
-          {sortedData.map((products) => {
-            return <Product key={products.id} {...products} />;
-          })}
+        {sortedData.length > 0 ? (
+            sortedData.map((product) => {
+              return <Product key={product.id} {...product} />;
+            })
+          ) : (
+            <p>No products found.</p>
+          )}
         </div>
       </div>
     </div>
