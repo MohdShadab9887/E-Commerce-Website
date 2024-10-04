@@ -47,49 +47,50 @@ const SinglePage = () => {
   }
 
   const [currImg, setCurrImg] = useState(
-    data?.image ? data.image[0].url : null
+    data?.image ? data.image[0].url : null,
   );
 
   // console.log(data)
 
   if (isLoading) {
     return (
-      <div className="font-thin text-center text-[30px]">
+      <div className="text-center text-[30px] font-thin">
         <span> Loading Please Wait...</span>
       </div>
     );
   }
 
   return (
-    <div className=" flex my-4 h-full items-center justify-center">
+    <div className="my-4 flex h-full items-center justify-center">
       <div className="text-center">
-
-        <div className=" flex flex-row  items-center m-auto  xs:flex-col">
+        <div className="m-auto flex flex-row items-center xs:flex-col">
           {/* Images List */}
-          <div className="image-gallery flex ">
+          <div className="image-gallery flex">
             <div>
-              {data?.image && Array.isArray(data.image)
-                ? data.image.map((img, index) => (
-                    <figure key={index}>
-                      <img
-                        className="mb-1 xs:w-[110px] xs:h-[80px]"
-                        src={img.url}
-                        alt={`Product Image ${index + 1}`}
-                        width="130"
-                        height="130"
-                        onClick={() => setCurrImg(img.url)}
-                      />
-                    </figure>
-                  ))
-                : <div >
-                <span> Loading images Please Wait...</span>
-              </div>}
+              {data?.image && Array.isArray(data.image) ? (
+                data.image.map((img, index) => (
+                  <figure key={index}>
+                    <img
+                      className="mb-1 xs:h-[80px] xs:w-[110px]"
+                      src={img.url}
+                      alt={`Product Image ${index + 1}`}
+                      width="130"
+                      height="130"
+                      onClick={() => setCurrImg(img.url)}
+                    />
+                  </figure>
+                ))
+              ) : (
+                <div>
+                  <span> Loading images Please Wait...</span>
+                </div>
+              )}
             </div>
-            <div className="items-center justify-center flex mr-4 ">
+            <div className="mr-4 flex items-center justify-center">
               {data?.image && (
                 <figure>
                   <img
-                    className="ml-4 xs:h-[130px] "
+                    className="ml-4 xs:h-[130px]"
                     src={currImg ? currImg : data.image[0].url}
                     width="200"
                     height="200"
@@ -99,9 +100,9 @@ const SinglePage = () => {
             </div>
           </div>
           {/* Product details */}
-          <div className="flex flex-row text-start xs:mt-4  ">
-            <div className=" w-[350px] ">
-              <h1 className="text-3xl xs:text-5xl xs:mb-2 mb-2 text-gray-500">
+          <div className="flex flex-row text-start xs:mt-4">
+            <div className="w-[350px]">
+              <h1 className="mb-2 text-3xl text-gray-500 xs:mb-2 xs:text-5xl">
                 {data.name}
               </h1>
               {/* <div>
@@ -110,30 +111,30 @@ const SinglePage = () => {
 
               <p className="text-red-300">
                 M.R.P :
-                <span className="line-through font-semibold ">
+                <span className="font-semibold line-through">
                   {formatToINR(data.price / 10 + 2500)}
                 </span>{" "}
               </p>
-              <p className="text-orange-700 text-sm font-semibold">
+              <p className="text-sm font-semibold text-orange-700">
                 Deal of the day: {formatToINR(data.price / 10)}
               </p>
 
-              <p className="w-72 font-thin text-sm "> {data.description}</p>
+              <p className="w-72 text-sm font-thin"> {data.description}</p>
 
-              <div className="flex  my-2 justify-between mr-4 border-b-2 pb-2">
-                <div className="flex flex-col justify-center w-fit">
-                  <TbTruckDelivery className=" m-auto" size="20px" />
-                  <p className="font-thin text-xs">Free Delivery</p>
+              <div className="my-2 mr-4 flex justify-between border-b-2 pb-2">
+                <div className="flex w-fit flex-col justify-center">
+                  <TbTruckDelivery className="m-auto" size="20px" />
+                  <p className="text-xs font-thin">Free Delivery</p>
                 </div>
 
-                <div className="flex flex-col items-center justify-center w-fit">
+                <div className="flex w-fit flex-col items-center justify-center">
                   <TbReplaceFilled size="20px" />
-                  <p className="font-thin text-xs">7 Days Replacement</p>
+                  <p className="text-xs font-thin">7 Days Replacement</p>
                 </div>
 
-                <div className="flex flex-col items-center justify-center  w-fit">
+                <div className="flex w-fit flex-col items-center justify-center">
                   <MdOutlineSecurity size="20px" />
-                  <p className="font-thin text-xs">2 Year Warranty</p>
+                  <p className="text-xs font-thin">2 Year Warranty</p>
                 </div>
               </div>
               <p>
@@ -153,7 +154,9 @@ const SinglePage = () => {
                     {" "}
                     Only {data.stock} left in stock
                   </span>
-                ) : ""}
+                ) : (
+                  ""
+                )}
               </p>
 
               <p>
@@ -166,7 +169,7 @@ const SinglePage = () => {
 
               <div>
                 {data?.shipping && (
-                  <p className="flex flex-row gap-2 mb-1">
+                  <p className="mb-1 flex flex-row gap-2">
                     Color:
                     <div
                       style={{ backgroundColor: data.colors[0] }}
@@ -184,17 +187,17 @@ const SinglePage = () => {
                 )}
               </div>
 
-              <div className=" mt-2 ">Add to cart :</div>
+              <div className="mt-2">Add to cart :</div>
 
               <button
-                className="bg-orange-700 text-lg font-bold text-white px-4 w-14 mr-4"
+                className="mr-4 w-14 bg-orange-700 px-4 text-lg font-bold text-white"
                 onClick={minus}
               >
                 -
               </button>
               {value.count}
               <button
-                className="bg-orange-700 text-lg font-bold text-white px-4 w-14 ml-4"
+                className="ml-4 w-14 bg-orange-700 px-4 text-lg font-bold text-white"
                 onClick={add}
               >
                 +

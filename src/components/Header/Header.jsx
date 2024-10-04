@@ -9,7 +9,7 @@ export default function Header({ count, setCount }) {
     <div className="h-screen w-screen bg-black">
       <Link
         to="/LogIn"
-        className=" font-bold hover:bg-gray-50 text-orange-700 focus:ring-4 focus:ring-gray-300  rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+        className="mr-2 rounded-lg px-4 py-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
       >
         Log in
       </Link>
@@ -17,9 +17,9 @@ export default function Header({ count, setCount }) {
   };
 
   return (
-    <header className="shadow sticky z-50 top-0">
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+    <header className="sticky top-0 z-50 shadow">
+      <nav className="border-gray-200 bg-white px-4 py-2.5 lg:px-6">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between">
           <Link to="/" className="flex items-center">
             <img
               src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
@@ -28,41 +28,41 @@ export default function Header({ count, setCount }) {
             />
           </Link>
 
-          <div className="text-orange-700  xs:block hidden">
+          <div className="hidden text-orange-700 xs:block">
             <button onClick={onHamClick}>
               <RxHamburgerMenu size="1.5em" />
             </button>
           </div>
 
-          <div className="flex xs:hidden items-center lg:order-2">
+          <div className="flex items-center lg:order-2 xs:hidden">
             <Link
               to="/LogIn"
-              className=" font-bold hover:bg-gray-50 text-orange-700 focus:ring-4 focus:ring-gray-300  rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+              className="mr-2 rounded-lg px-4 py-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
             >
               Log in
             </Link>
             <Link
               to="/cart"
-              className="text-whitefocus:ring-4 relative text-orange-700 border-black focus:ring-orange-300 font-medium rounded-lg text-sm px-4 lg:px-5  lg:py-2.5 mr-2 focus:outline-none"
+              className="text-whitefocus:ring-4 relative mr-2 rounded-lg border-black px-4 text-sm font-medium text-orange-700 focus:outline-none focus:ring-orange-300 lg:px-5 lg:py-2.5"
             >
               <FaCartShopping size="1.5em" />
-              <div className="bg-white text-center text-orange-700  h-4 w-4 rounded-full absolute lg:right-2 lg:top-[0] md:-top-2 md:right-1 sm:-top-2  right-0 -top-2 sm:right-1 font-bold">
+              <div className="absolute -top-2 right-0 h-4 w-4 rounded-full bg-white text-center font-bold text-orange-700 sm:-top-2 sm:right-1 md:-top-2 md:right-1 lg:right-2 lg:top-[0]">
                 {count}
               </div>
             </Link>
           </div>
           <div
-            className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
+            className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
             id="mobile-menu-2"
           >
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+            <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
               <li>
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
+                    `block py-2 pl-3 pr-4 duration-200 ${
                       isActive ? "text-orange-700" : "text-slate-700"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
+                    } border-b border-gray-100 hover:bg-gray-50 hover:text-orange-700 lg:border-0 lg:p-0 lg:hover:bg-transparent`
                   }
                 >
                   Home
@@ -73,9 +73,9 @@ export default function Header({ count, setCount }) {
                 <NavLink
                   to="/shop"
                   className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
+                    `block py-2 pl-3 pr-4 duration-200 ${
                       isActive ? "text-orange-700" : "text-slate-700"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
+                    } border-b border-gray-100 hover:bg-gray-50 hover:text-orange-700 lg:border-0 lg:p-0 lg:hover:bg-transparent`
                   }
                 >
                   Shop
@@ -87,9 +87,9 @@ export default function Header({ count, setCount }) {
                   // to="/about"
                   to="/kdfgml"
                   className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
+                    `block py-2 pl-3 pr-4 duration-200 ${
                       isActive ? "text-orange-700" : "text-slate-700"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
+                    } border-b border-gray-100 hover:bg-gray-50 hover:text-orange-700 lg:border-0 lg:p-0 lg:hover:bg-transparent`
                   }
                 >
                   About
@@ -99,9 +99,9 @@ export default function Header({ count, setCount }) {
                 <NavLink
                   to="/contact"
                   className={({ isActive }) =>
-                    `block py-2 pr-4 pl-3 duration-200 ${
+                    `block py-2 pl-3 pr-4 duration-200 ${
                       isActive ? "text-orange-700" : "text-slate-700"
-                    } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
+                    } border-b border-gray-100 hover:bg-gray-50 hover:text-orange-700 lg:border-0 lg:p-0 lg:hover:bg-transparent`
                   }
                 >
                   Contact-Us

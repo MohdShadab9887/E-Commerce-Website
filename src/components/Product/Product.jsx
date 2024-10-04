@@ -10,7 +10,7 @@ function Product(curElem) {
 
   if (isLoading) {
     return (
-      <div className="font-thin text-center text-[30px]">
+      <div className="text-center text-[30px] font-thin">
         <span> Loading Please Wait...</span>
       </div>
     );
@@ -21,16 +21,12 @@ function Product(curElem) {
       <div></div>
 
       <NavLink to={`/singlepage/${id}`}>
-        <div className=" w-[230px] m-[10px] xs:w-[180px]  hover:scale-105 hover:bg-gray-50 hover:shadow-xl shadow-md transition-all  overflow-hidden border-slate-300   p-1 border ">
-          <figure >
-            <img className="h-[150px] m-auto" src={image} alt="" />
+        <div className="m-[10px] w-[230px] overflow-hidden border border-slate-300 p-1 shadow-md transition-all hover:scale-105 hover:bg-gray-50 hover:shadow-xl xs:w-[180px]">
+          <figure>
+            <img className="m-auto h-[150px]" src={image} alt="" />
           </figure>
 
-          <div
-            className="flex flex-row 
-      
-      justify-between mx-2  "
-          >
+          <div className="mx-2 flex flex-row justify-between">
             <div className="hover:underline"> {name}</div>
             <div className="text-cyan-600"> {formatToINR(price / 100)}</div>
           </div>

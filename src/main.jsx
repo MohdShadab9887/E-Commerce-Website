@@ -14,7 +14,6 @@ import SignUp from "./components/SignUp/SignUp.jsx";
 import Error from "./components/Error/Error.jsx";
 import SinglePage from "./components/SinglePage/SinglePage.jsx";
 
-
 const router = createBrowserRouter([
   {
     path: "",
@@ -34,6 +33,6 @@ const router = createBrowserRouter([
 ]);
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-    <RouterProvider router={router} />
+  <RouterProvider router={router} />,
   // </StrictMode>
 );

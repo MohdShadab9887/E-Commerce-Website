@@ -9,18 +9,20 @@ function Shop() {
   let [sortedData, setsortedData] = useState(products);
   const [searchText, setSearchText] = useState("");
 
-  // Update sortedData when products or searchText change
   useEffect(() => {
-    // Filter products based on search text
-    const filteredData = products.filter((product) =>
+    setsortedData(products);
+  }, [products]);
+
+  useEffect(() => {
+    const filteredData = products.filter((product) => 
       product.name.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setsortedData(filteredData);
+  );
+    setsortedData(filteredData)
   }, [products, searchText]);
 
   if (isLoading) {
     return (
-      <div className="font-thin text-center text-[30px]">
+      <div className="text-center text-[30px] font-thin">
         <span> Loading Please Wait...</span>
       </div>
     );
@@ -29,6 +31,7 @@ function Shop() {
   let sortingData = [...products];
   const order = () => {
     let myVariable = document.getElementById("khan");
+
     let myValue = myVariable.options[myVariable.selectedIndex].value;
 
     if (myValue == "a-z") {
@@ -44,40 +47,62 @@ function Shop() {
   };
 
   const handleSearchText = (e) => {
+    e.preventDefault();
     setSearchText(e.target.value);
   };
 
   return (
     <div>
-       <div className="justify-between xs:flex-col xs:h-24 xs:justify-evenly px-10 flex m-auto rounded h-16 items-center ">
+      <div className="m-auto flex h-16 w-5/6 items-center justify-between rounded px-10 xs:h-24 xs:flex-col xs:justify-evenly">
         <input
           type="text"
           name="text"
           placeholder="Search"
           value={searchText}
           onChange={handleSearchText}
-          className="h-[35px] p-2 w-[250px] border-2 rounded-lg"
+          className="h-[35px] w-[250px] rounded-lg border-2 p-2 outline-none"
         />
-        <form className="border p-1 mt-4 rounded-md" action="#">
+        <form className="mt-0 rounded-md border p-1" action="#">
+          <label
+            className="mr-2 border-none text-sm font-semibold text-gray-700"
+            htmlFor="khan"
+          >
+            Order:
+          </label>
           <select
-            className="border-none"
+            className="min-w-[130px] border-none text-sm font-thin outline-none"
             name="khan"
             id="khan"
             onChange={order}
           >
-            <option value="Newest-First" className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <option
+              value="Newest-First"
+              className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               Newest First
             </option>
-            <option value="a-z" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <option
+              value="a-z"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               Price ( a-z )
             </option>
-            <option value="z-a" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <option
+              value="z-a"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               Price ( z-a )
             </option>
-            <option value="Low to High" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <option
+              value="Low to High"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               Price: Low to High
             </option>
-            <option value="High to Low" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            <option
+              value="High to Low"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
               Price: High to Low
             </option>
           </select>
@@ -89,14 +114,10 @@ function Shop() {
           <p>hello</p>
         </div> */}
         {/* w-4/6 */}
-        <div className=" flex flex-wrap justify-center">
-          {sortedData.length > 0 ? (
-            sortedData.map((product) => {
-              return <Product key={product.id} {...product} />;
-            })
-          ) : (
-            <p>No products found.</p>
-          )}
+        <div className="flex flex-wrap justify-center">
+          {sortedData.map((products) => {
+            return <Product key={products.id} {...products} />;
+          })}
         </div>
       </div>
     </div>

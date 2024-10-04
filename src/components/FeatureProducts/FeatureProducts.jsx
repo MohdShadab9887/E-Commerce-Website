@@ -7,8 +7,8 @@ function FeatureProducts() {
     <div>...loading</div>;
   }
   return (
-    <div className="text-center ">  
-      <div className="text-center flex justify-center flex-wrap">
+    <div className="text-center">
+      <div className="flex flex-wrap justify-center text-center">
         {featureProducts.map((products) => {
           return <Product key={products.id} {...products} />;
         })}
