@@ -3,14 +3,15 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { Outlet } from "react-router-dom";
-// import FeatureProducts from "./components/FeatureProducts/FeatureProducts";
+import FeatureProducts from "./components/FeatureProducts/FeatureProducts";
 
 // import counterContext from "./components/Context/Context.jsx"
 import { AppContext, AppProvider, counterContext } from '/src/components/Context/Context.jsx';
+import HamNav from "./components/HamNav/HamNav";
 
 
 function App() {
-  const [count, setCount] = useState('1');
+  const [count, setCount] = useState('0');
 
   return (
     <>

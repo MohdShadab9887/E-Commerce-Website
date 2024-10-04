@@ -2,8 +2,20 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
+import HamNav from "../HamNav/HamNav";
 
 export default function Header({ count, setCount }) {
+  const onHamClick = () => {
+    <div className="h-screen w-screen bg-black">
+      <Link
+        to="/LogIn"
+        className=" font-bold hover:bg-gray-50 text-orange-700 focus:ring-4 focus:ring-gray-300  rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none"
+      >
+        Log in
+      </Link>
+    </div>;
+  };
+
   return (
     <header className="shadow sticky z-50 top-0">
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
@@ -17,7 +29,7 @@ export default function Header({ count, setCount }) {
           </Link>
 
           <div className="text-orange-700  xs:block hidden">
-            <button >
+            <button onClick={onHamClick}>
               <RxHamburgerMenu size="1.5em" />
             </button>
           </div>
@@ -70,9 +82,10 @@ export default function Header({ count, setCount }) {
                 </NavLink>
               </li>
 
-              {/* <li>
+              <li>
                 <NavLink
-                  to="/about"
+                  // to="/about"
+                  to="/kdfgml"
                   className={({ isActive }) =>
                     `block py-2 pr-4 pl-3 duration-200 ${
                       isActive ? "text-orange-700" : "text-slate-700"
@@ -81,7 +94,7 @@ export default function Header({ count, setCount }) {
                 >
                   About
                 </NavLink>
-              </li> */}
+              </li>
               <li>
                 <NavLink
                   to="/contact"

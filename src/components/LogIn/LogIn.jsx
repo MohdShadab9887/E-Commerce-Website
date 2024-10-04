@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SignUp from "../SignUp/SignUp";
 import { Link } from "react-router-dom";
 
 function LogIn() {

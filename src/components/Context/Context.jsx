@@ -36,9 +36,8 @@ const AppProvider = ({ children }) => {
       dispatch({ type: "API_ERROR" });
     }
   };
-  
 
-  const getSingleProduct = async (url)=>{
+  const getSingleProduct = async (url) => {
     dispatch({ type: "SET_LOADING" });
 
     try {
@@ -48,14 +47,23 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       dispatch({ type: "API_ERROR" });
     }
-  }
+  };
 
   useEffect(() => {
     getProducts(API);
   }, []);
+  const formatToINR = (amount) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 2, // For showing two decimal places
+    }).format(amount);
+  };
 
   return (
-    <AppContext.Provider value={{ ...state }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ ...state, formatToINR }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 

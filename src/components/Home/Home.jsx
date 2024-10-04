@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import FeatureProducts from '../FeatureProducts/FeatureProducts';
 
 export default function Home() {
     return (
@@ -42,6 +43,9 @@ export default function Home() {
 
             <h1 className="text-center text-2xl sm:text-5xl py-10 font-medium">Get Faster Delivery</h1>
           
+          <div>
+        <FeatureProducts/>
+          </div>
         </div>
     );
 }

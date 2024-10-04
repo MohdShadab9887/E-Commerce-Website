@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useProductContext } from "../Context/Context";
 import axios from "axios";
 import { MdPadding } from "react-icons/md";
 import { TbTruckDelivery, TbReplaceFilled } from "react-icons/tb";
@@ -11,6 +12,9 @@ import {
 } from "/src/components/Context/Context.jsx";
 
 const SinglePage = () => {
+  const { isLoading, formatToINR, products, featureProducts } =
+    useProductContext();
+
   const [data, setData] = useState([]);
   const currentUrl = window.location.href;
   const id = currentUrl.split("singlepage/")[1];
@@ -46,45 +50,40 @@ const SinglePage = () => {
     data?.image ? data.image[0].url : null
   );
 
-  const formatToINR = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      minimumFractionDigits: 2, // For showing two decimal places
-    }).format(amount);
-  };
-
   // console.log(data)
+
+  if (isLoading) {
+    return (
+      <div className="font-thin text-center text-[30px]">
+        <span> Loading Please Wait...</span>
+      </div>
+    );
+  }
 
   return (
     <div className=" flex my-4 h-full items-center justify-center">
       <div className="text-center">
-        {data ? (
-          ""
-        ) : (
-          <div className="font-thin text-center text-4xl"> Loading...</div>
-        )}
 
         <div className=" flex flex-row  items-center m-auto  xs:flex-col">
           {/* Images List */}
           <div className="image-gallery flex ">
             <div>
-              {data?.image && Array.isArray(data.image) ? (
-                data.image.map((img, index) => (
-                  <figure key={index}>
-                    <img
-                      className="mb-1 xs:w-[110px] xs:h-[80px]"
-                      src={img.url}
-                      alt={`Product Image ${index + 1}`}
-                      width="130"
-                      height="130"
-                      onClick={() => setCurrImg(img.url)}
-                    />
-                  </figure>
-                ))
-              ) : (
-                <p>Loading... Please wait</p>
-              )}
+              {data?.image && Array.isArray(data.image)
+                ? data.image.map((img, index) => (
+                    <figure key={index}>
+                      <img
+                        className="mb-1 xs:w-[110px] xs:h-[80px]"
+                        src={img.url}
+                        alt={`Product Image ${index + 1}`}
+                        width="130"
+                        height="130"
+                        onClick={() => setCurrImg(img.url)}
+                      />
+                    </figure>
+                  ))
+                : <div >
+                <span> Loading images Please Wait...</span>
+              </div>}
             </div>
             <div className="items-center justify-center flex mr-4 ">
               {data?.image && (
@@ -141,7 +140,7 @@ const SinglePage = () => {
                 Available :{" "}
                 <span className="font-semibold">
                   {data.shipping ? (
-                    <span className="text-green-700">In stock</span>
+                    <span className="text-green-600">In stock</span>
                   ) : (
                     <span className="text-red-700">Currently unavailable.</span>
                   )}
@@ -154,7 +153,7 @@ const SinglePage = () => {
                     {" "}
                     Only {data.stock} left in stock
                   </span>
-                ) : null}
+                ) : ""}
               </p>
 
               <p>
