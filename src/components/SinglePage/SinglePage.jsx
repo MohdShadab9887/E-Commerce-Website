@@ -67,9 +67,9 @@ const SinglePage = () => {
   }
 
   };
-if (data) {
-  console.log(data)
-}
+// if (data) {
+//   console.log(data)
+// }
   return (
     <div className="my-4 flex h-full items-center justify-center">
       <div className="text-center">

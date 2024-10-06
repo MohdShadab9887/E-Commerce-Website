@@ -4,23 +4,25 @@ import { MdDeleteForever } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 
 const Cart = () => {
-  const { isLoading, formatToINR, cart, setCart, total, totalPrice } = useProductContext();
+  const {
+    isLoading,
+    formatToINR,
+    cart,
+    total,
+    totalPrice,
+    removeFromCart,
+  } = useProductContext();
 
-  {
-    /* Function to remove an item from the cart */
+  if (isLoading) {
+    return (
+      <div className="text-center text-[30px] font-thin">
+        <span> Loading Please Wait...</span>
+      </div>
+    );
   }
-  const removeFromCart = (id) => {
-    // console.log("Clicked")
-
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-    console.log("Deleted");
-  };
-
-  
-
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center ">
       <div className="m-auto my-2 w-[90%] text-center font-semibold text-orange-600">
         <span>
           Total {total ? total : ""}
@@ -32,7 +34,7 @@ const Cart = () => {
         cart.map((item) => (
           <div
             key={item.id}
-            className="m-auto my-1 flex w-[90%] items-center justify-between gap-2 border p-1"
+            className="m-auto my-1 flex w-[95%] items-center justify-between gap-2 border p-1"
           >
             <div className="flex w-1/2 gap-5 xs:gap-2">
               <img
@@ -47,49 +49,36 @@ const Cart = () => {
             </div>
             <div className="flex w-1/2 justify-between">
               <span>Qty: {item.quantity}</span>
-              <p className="font-serif font-bold text-sm">
+              <p className="font-serif text-sm font-bold">
                 {formatToINR(item.price)}
               </p>
-              <span onClick={() => removeFromCart(item.id)} className="p-1 text-orange-600">
+              <span
+                onClick={() => removeFromCart(item.id)}
+                className="p-1 text-orange-600"
+              >
                 <MdDeleteForever size={30} />
               </span>
             </div>
-
           </div>
         ))
       ) : (
         <p>No items in the cart</p>
       )}
 
-      <div className="font-semibold">Subtotal ({total}{total <= 1? " item" : " items"}): <span className="font-bold">{formatToINR(totalPrice + 500)}</span></div>
+      <div className=" flex   font-semibold">
+        Subtotal ({total}
+        {total <= 1 ? " item" : " items"}):{" "}
+        <span className="font-bold">{formatToINR(totalPrice)}</span>
+      </div>
 
       <button>
         <Link
-          className="inline-flex items-center  bg-orange-700 px-6 py-1 rounded-md font-medium text-white hover:opacity-75 my-4"
+          className="my-4 inline-flex items-center rounded-md bg-orange-700 px-6 py-1 font-medium text-white hover:opacity-75"
           to="/shop"
         >
           Shop Now
         </Link>
       </button>
-
-      {/* 
-{cart[1] ? (
-        <div className="m-auto my-1 flex w-[90%] items-center justify-between gap-2 border p-1">
-          <div className="flex gap-5 xs:gap-1">
-            <img className="h-12" src={cart[1].image[0].url} alt="" />
-            <div className="">
-              <h1>{cart[1].name}</h1>
-              <h1 className="font-semibold">{cart[1].company}</h1>
-            </div>
-          </div>
-          <p>{formatToINR(cart[1].price / 10 + 2500)}</p>
-          <span className="p-1 text-orange-700">
-            <MdDeleteForever size={30} />
-          </span>
-        </div>
-      ) : (
-       null
-      )} */}
     </div>
   );
 };

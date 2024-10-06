@@ -8,15 +8,8 @@ import Cart from "../Cart/Cart";
 import { useState, useEffect } from "react";
 
 export default function Header({ count, setCount }) {
-  const { isLoading, formatToINR, cart, setCart, total } = useProductContext();
+  const { total } = useProductContext();
   const [cartTotal, setCartTotal] = useState(0);
-
-  // useEffect(() => {
-    
-  //   setCartTotal(total);
-    
-  // }, [cartTotal])
-  
 
   const onHamClick = () => {
     <div className="h-screen w-screen bg-black">
@@ -41,29 +34,43 @@ export default function Header({ count, setCount }) {
             />
           </Link>
 
-          <div className="hidden text-orange-700 xs:block">
+          
+
+          <div className="flex items-center lg:order-2 ">
+            <Link
+              to="/LogIn"
+              className="mr-2 xs:hidden rounded-lg px-4 py-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+            >
+              Log in
+            </Link>
+
+
+
+
+            <Link
+              to="/cart"
+              className="focus:ring-4 relative mr-2 rounded-lg border-black px-4 text-sm font-medium text-orange-700 focus:outline-none focus:ring-orange-300 lg:px-5 lg:py-2.5"
+            >
+              <FaCartShopping size="1.5em" />
+              <div className="absolute -top-3 right-0  h-4 w-4 rounded-full bg-white  text-center font-bold text-orange-700 sm:-top-2 sm:right-1 md:-top-2 md:right-1 lg:right-2 lg:top-[0]">
+                {total ? total : ""}
+              </div>
+            </Link>
+
+
+            <div className="hidden text-orange-700 xs:block">
             <button onClick={onHamClick}>
               <RxHamburgerMenu size="1.5em" />
             </button>
           </div>
 
-          <div className="flex items-center lg:order-2 xs:hidden">
-            <Link
-              to="/LogIn"
-              className="mr-2 rounded-lg px-4 py-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
-            >
-              Log in
-            </Link>
-            <Link
-              to="/cart"
-              className="text-whitefocus:ring-4 relative mr-2 rounded-lg border-black px-4 text-sm font-medium text-orange-700 focus:outline-none focus:ring-orange-300 lg:px-5 lg:py-2.5"
-            >
-              <FaCartShopping size="1.5em" />
-              <div className="absolute -top-2 right-0 h-4 w-4 rounded-full bg-white text-center font-bold text-orange-700 sm:-top-2 sm:right-1 md:-top-2 md:right-1 lg:right-2 lg:top-[0]">
-              {total? total:""}
-              </div>
-            </Link>
           </div>
+
+
+
+          
+
+
           <div
             className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
             id="mobile-menu-2"

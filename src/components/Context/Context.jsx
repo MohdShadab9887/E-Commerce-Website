@@ -13,6 +13,15 @@ const counterContext = createContext();
 const AppContext = createContext();
 
 const API = "https://api.pujakaitem.com/api/products";
+const newCartData = [];
+const getLocalCartData = () => {
+  if (newCartData == []) {
+    return [];
+  } else {
+    const newCartData = localStorage.getItem("MKstorage");
+    return JSON.parse(newCartData);
+  }
+};
 
 const initialState = {
   isLoading: false,
@@ -24,6 +33,7 @@ const initialState = {
 // Provider component
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [cart, setCart] = useState(getLocalCartData());
 
   const getProducts = async (url) => {
     dispatch({ type: "SET_LOADING" });
@@ -42,8 +52,8 @@ const AppProvider = ({ children }) => {
 
     try {
       const res = await axios.get(url);
-      const products = await res.data;
-      dispatch({ type: "SET_SINGLE_DATA", payload: products });
+      const product = await res.data;
+      dispatch({ type: "SET_SINGLE_DATA", payload: product });
     } catch (error) {
       dispatch({ type: "API_ERROR" });
     }
@@ -52,25 +62,40 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     getProducts(API);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("MKstorage", JSON.stringify(cart));
+  }, [cart]);
+
   const formatToINR = (amount) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
       currency: "INR",
-      minimumFractionDigits: 2, // For showing two decimal places
-    }).format(amount/10);
+      minimumFractionDigits: 2,
+    }).format(amount / 10);
   };
 
-  const [cart, setCart] = useState([]);
-  let total = cart?.reduce((total, item) => total + item.quantity, 0);
-
-  // Calculate the total price of items in the cart
-  const totalPrice = cart?.reduce(
+  const total = cart.reduce((total, item) => total + item.quantity, 0);
+  const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
+
+  const removeFromCart = (id) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  };
+
   return (
     <AppContext.Provider
-      value={{ ...state, formatToINR, cart, setCart, total, totalPrice }}
+      value={{
+        ...state,
+        formatToINR,
+        cart,
+        setCart,
+        total,
+        totalPrice,
+        removeFromCart,
+      }}
     >
       {children}
     </AppContext.Provider>
@@ -81,5 +106,4 @@ const useProductContext = () => {
   return useContext(AppContext);
 };
 
-// Correct export: Named export instead of default
 export { AppContext, AppProvider, counterContext, useProductContext };

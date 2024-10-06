@@ -77,31 +77,31 @@ function Shop() {
           >
             <option
               value="Newest-First"
-              className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="px-4 py-2 text-sm text-gray-700"
             >
               Newest First
             </option>
             <option
               value="a-z"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-gray-700"
             >
               Price ( a-z )
             </option>
             <option
               value="z-a"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-gray-700"
             >
               Price ( z-a )
             </option>
             <option
               value="Low to High"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-gray-700"
             >
               Price: Low to High
             </option>
             <option
               value="High to Low"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block px-4 py-2 text-sm text-gray-700"
             >
               Price: High to Low
             </option>
@@ -115,7 +115,7 @@ function Shop() {
         </div> */}
         {/* w-4/6 */}
         <div className="flex flex-wrap justify-center">
-        {sortedData.length > 0 ? (
+          {sortedData.length > 0 ? (
             sortedData.map((product) => {
               return <Product key={product.id} {...product} />;
             })
