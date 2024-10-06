@@ -64,7 +64,7 @@ function Shop() {
         />
         <form className="mt-0 rounded-md border p-1" action="#">
           <label
-            className="mr-2 border-none text-sm font-semibold text-gray-700"
+            className="mr-2 border-none text-sm font-semibold"
             htmlFor="khan"
           >
             Order:

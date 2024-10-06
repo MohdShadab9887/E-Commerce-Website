@@ -57,11 +57,21 @@ const AppProvider = ({ children }) => {
       style: "currency",
       currency: "INR",
       minimumFractionDigits: 2, // For showing two decimal places
-    }).format(amount);
+    }).format(amount/10);
   };
 
+  const [cart, setCart] = useState([]);
+  let total = cart?.reduce((total, item) => total + item.quantity, 0);
+
+  // Calculate the total price of items in the cart
+  const totalPrice = cart?.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
   return (
-    <AppContext.Provider value={{ ...state, formatToINR }}>
+    <AppContext.Provider
+      value={{ ...state, formatToINR, cart, setCart, total, totalPrice }}
+    >
       {children}
     </AppContext.Provider>
   );

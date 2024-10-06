@@ -3,8 +3,21 @@ import { Link, NavLink } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import HamNav from "../HamNav/HamNav";
+import { useProductContext } from "../Context/Context";
+import Cart from "../Cart/Cart";
+import { useState, useEffect } from "react";
 
 export default function Header({ count, setCount }) {
+  const { isLoading, formatToINR, cart, setCart, total } = useProductContext();
+  const [cartTotal, setCartTotal] = useState(0);
+
+  // useEffect(() => {
+    
+  //   setCartTotal(total);
+    
+  // }, [cartTotal])
+  
+
   const onHamClick = () => {
     <div className="h-screen w-screen bg-black">
       <Link
@@ -47,7 +60,7 @@ export default function Header({ count, setCount }) {
             >
               <FaCartShopping size="1.5em" />
               <div className="absolute -top-2 right-0 h-4 w-4 rounded-full bg-white text-center font-bold text-orange-700 sm:-top-2 sm:right-1 md:-top-2 md:right-1 lg:right-2 lg:top-[0]">
-                {count}
+              {total? total:""}
               </div>
             </Link>
           </div>

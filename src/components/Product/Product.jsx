@@ -3,8 +3,7 @@ import { useProductContext } from "../Context/Context";
 import { NavLink } from "react-router-dom";
 
 function Product(curElem) {
-  const { isLoading, products, featureProducts, formatToINR } =
-    useProductContext();
+  const { isLoading, formatToINR } = useProductContext();
 
   const { id, image, name, price } = curElem;
 
@@ -28,7 +27,7 @@ function Product(curElem) {
 
           <div className="mx-2 flex flex-row justify-between">
             <div className="hover:underline"> {name}</div>
-            <div className="text-cyan-600"> {formatToINR(price / 100)}</div>
+            <div className="text-cyan-600"> {formatToINR(price/10)}</div>
           </div>
         </div>
       </NavLink>

@@ -1,65 +1,75 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useProductContext } from "../Context/Context";
 import axios from "axios";
-import { MdPadding } from "react-icons/md";
 import { TbTruckDelivery, TbReplaceFilled } from "react-icons/tb";
 import { MdOutlineSecurity } from "react-icons/md";
-
-import {
-  AppContext,
-  AppProvider,
-  counterContext,
-} from "/src/components/Context/Context.jsx";
+import { NavLink } from "react-router-dom";
+import { counterContext } from "/src/components/Context/Context.jsx";
 
 const SinglePage = () => {
-  const { isLoading, formatToINR, products, featureProducts } =
-    useProductContext();
+  const { isLoading, formatToINR, cart, setCart } = useProductContext();
 
   const [data, setData] = useState([]);
   const currentUrl = window.location.href;
   const id = currentUrl.split("singlepage/")[1];
 
+  // Fetch product details
   const getProducts = async () => {
     const URL = `https://api.pujakaitem.com/api/products/${id}`;
-
     try {
       const res = await axios.get(URL);
-      const singleProduct = await res.data;
+      const singleProduct = res.data;
       setData(singleProduct);
     } catch (error) {
-      console.log(`the red ${error}`);
+      console.log(`Error: ${error}`);
     }
-    return data;
   };
 
   useEffect(() => {
     getProducts();
-  }, [{ id }]);
+  }, [id]);
 
-  let value = useContext(counterContext);
+  const value = useContext(counterContext);
 
   function add() {
-    value.setCount((prevcount) => Number(prevcount) + 1);
+    value.setCount((prevCount) => Number(prevCount) + 1);
   }
 
   function minus() {
-    value.setCount((prevcount) => Number(prevcount) - 1);
+    value.setCount((prevCount) => Number(prevCount) - 1);
   }
 
-  const [currImg, setCurrImg] = useState(
-    data?.image ? data.image[0].url : null,
-  );
-
-  // console.log(data)
+  const [currImg, setCurrImg] = useState(data?.image ? data.image[0].url : null);
 
   if (isLoading) {
     return (
       <div className="text-center text-[30px] font-thin">
-        <span> Loading Please Wait...</span>
+        <span>Loading, Please Wait...</span>
       </div>
     );
   }
 
+  // Function to add product to the cart
+  const addToCart = () => {
+    if(value.count >= 1){
+
+    const product = {
+      id: data.id,
+      name: data.name,
+      image: data.image,
+      price: data.price,
+      quantity: value.count,
+      company: data.company,
+    }
+    setCart((prevCart) => [...prevCart, product]);
+  }else{
+    <div>Add at least 1 product</div>
+  }
+
+  };
+if (data) {
+  console.log(data)
+}
   return (
     <div className="my-4 flex h-full items-center justify-center">
       <div className="text-center">
@@ -82,7 +92,7 @@ const SinglePage = () => {
                 ))
               ) : (
                 <div>
-                  <span> Loading images Please Wait...</span>
+                  <span>Loading images, Please Wait...</span>
                 </div>
               )}
             </div>
@@ -105,17 +115,14 @@ const SinglePage = () => {
               <h1 className="mb-2 text-3xl text-gray-500 xs:mb-2 xs:text-5xl">
                 {data.name}
               </h1>
-              {/* <div>
-                <span className="text-sky-800">{data.stars} Ratings</span>
-              </div> */}
 
               <p className="text-red-300">
                 M.R.P :
                 <span className="font-semibold line-through">
                   {formatToINR(data.price / 10 + 2500)}
-                </span>{" "}
+                </span>
               </p>
-              <p className="text-sm font-semibold text-orange-700">
+              <p className="text-sm font-semibold text-orange-600">
                 Deal of the day: {formatToINR(data.price / 10)}
               </p>
 
@@ -140,22 +147,20 @@ const SinglePage = () => {
               <p>
                 Available :{" "}
                 <span className="font-semibold">
-                  {data.shipping ? (
+                  {data.stock ? (
                     <span className="text-green-600">In stock</span>
                   ) : (
-                    <span className="text-red-700">Currently unavailable.</span>
+                    <span className="text-red-600">Currently unavailable.</span>
                   )}
                 </span>
               </p>
 
               <p>
-                {data.shipping ? (
-                  <span className="text-red-700">
-                    {" "}
+                {data.stock && (
+                  <span className="text-red-600">
+                    
                     Only {data.stock} left in stock
                   </span>
-                ) : (
-                  ""
                 )}
               </p>
 
@@ -167,41 +172,35 @@ const SinglePage = () => {
               </p>
               <hr style={{ border: "1px solid #000", margin: "10px 0" }} />
 
-              <div>
-                {data?.shipping && (
-                  <p className="mb-1 flex flex-row gap-2">
-                    Color:
-                    <div
-                      style={{ backgroundColor: data.colors[0] }}
-                      className="h-[20px] w-[20px] rounded-full"
-                    ></div>
-                    <div
-                      style={{ backgroundColor: data.colors[1] }}
-                      className="h-[20px] w-[20px] rounded-full"
-                    ></div>
-                    <div
-                      style={{ backgroundColor: data.colors[2] }}
-                      className="h-[20px] w-[20px] rounded-full"
-                    ></div>
-                  </p>
-                )}
-              </div>
-
               <div className="mt-2">Add to cart :</div>
 
               <button
-                className="mr-4 w-14 bg-orange-700 px-4 text-lg font-bold text-white"
+                className="mr-4 w-14 bg-orange-600 px-4 text-lg font-bold text-white  disabled:bg-orange-400 disabled:cursor-not-allowed"
                 onClick={minus}
+                disabled={value.count <= 1}
+
               >
                 -
               </button>
-              {value.count}
+              {value.count }
               <button
-                className="ml-4 w-14 bg-orange-700 px-4 text-lg font-bold text-white"
+                className="ml-4 w-14 bg-orange-600 px-4 text-lg font-bold text-white disabled:bg-orange-400 disabled:cursor-not-allowed"
                 onClick={add}
+                disabled={value.count === data.stock  || data.stock < 1}
               >
                 +
               </button>
+              <div>
+                <NavLink to="/cart">
+                  <button
+                    className="mt-2 bg-orange-600 disabled:line-through disabled:bg-orange-400 disabled:cursor-not-allowed p-1 px-4 text-lg font-bold text-white"
+                    onClick={addToCart}
+                    disabled={value.count < 1 }
+                  >
+                    ADD TO CART
+                  </button>
+                </NavLink>
+              </div>
             </div>
           </div>
         </div>
