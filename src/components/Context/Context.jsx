@@ -13,14 +13,10 @@ const counterContext = createContext();
 const AppContext = createContext();
 
 const API = "https://api.pujakaitem.com/api/products";
-const newCartData = [];
+
 const getLocalCartData = () => {
-  if (newCartData == []) {
-    return [];
-  } else {
-    const newCartData = localStorage.getItem("MKstorage");
-    return JSON.parse(newCartData);
-  }
+  const newCartData = localStorage.getItem("MKstorage");
+  return newCartData ? JSON.parse(newCartData) : [];
 };
 
 const initialState = {
@@ -78,12 +74,17 @@ const AppProvider = ({ children }) => {
   const total = cart.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
-    0,
+    0
   );
 
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
+
+  useEffect(() => {
+    console.log(cart)
+  }, [cart])
+  
 
   return (
     <AppContext.Provider
