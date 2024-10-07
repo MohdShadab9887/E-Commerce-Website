@@ -110,10 +110,6 @@ function Shop() {
       </div>
 
       <div className="flex justify-center">
-        {/* <div className="w-1/6 bg-orange-700">
-          <p>hello</p>
-        </div> */}
-        {/* w-4/6 */}
         <div className="flex flex-wrap justify-center">
           {sortedData.length > 0 ? (
             sortedData.map((product) => {

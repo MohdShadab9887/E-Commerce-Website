@@ -1,6 +1,9 @@
 import React from "react";
+import { useProductContext } from "../Context/Context";
 
 export default function Contact() {
+  const { loginWithRedirect, logout, isAuthenticated, user } =
+    useProductContext();
   return (
     <div className="items-top relative flex min-h-[500px] justify-center bg-white sm:items-center sm:pt-0">
       <div className="mx-auto max-w-6xl sm:px-6 lg:px-8">
@@ -97,10 +100,11 @@ export default function Contact() {
                   type="name"
                   name="username"
                   id="name"
+                  value={isAuthenticated ? user?.nickname : null}
                   placeholder="username"
                   required
                   autoComplete="off"
-                  className="w-100 mt-2 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-orange-500 focus:outline-none"
+                  className="w-100 mt-2 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-400 focus:border-orange-500 focus:outline-none"
                 />
               </div>
 
@@ -109,17 +113,16 @@ export default function Contact() {
                   type="email"
                   name="Email"
                   id="email"
+                  value={isAuthenticated ? user?.email : null}
                   placeholder="Email"
                   required
                   autoComplete="off"
-                  // value=""
-                  className="w-100 mt-2 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-orange-500 focus:outline-none"
+                  className="w-100 mt-2 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-400 focus:border-orange-500 focus:outline-none"
                 />
               </div>
 
               <div className="mt-2 flex flex-col">
                 <input
-                  // type="text"
                   name="Message"
                   id="tel"
                   placeholder="Enter your message "

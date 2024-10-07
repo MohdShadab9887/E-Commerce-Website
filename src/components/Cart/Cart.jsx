@@ -4,14 +4,8 @@ import { MdDeleteForever } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 
 const Cart = () => {
-  const {
-    isLoading,
-    formatToINR,
-    cart,
-    total,
-    totalPrice,
-    removeFromCart,
-  } = useProductContext();
+  const { isLoading, formatToINR, cart, total, totalPrice, removeFromCart } =
+    useProductContext();
 
   if (isLoading) {
     return (
@@ -22,7 +16,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center">
       <div className="m-auto my-2 w-[90%] text-center font-semibold text-orange-600">
         <span>
           Total {total ? total : ""}
@@ -65,7 +59,7 @@ const Cart = () => {
         <p>No items in the cart</p>
       )}
 
-      <div className=" flex   font-semibold">
+      <div className="flex font-semibold">
         Subtotal ({total}
         {total <= 1 ? " item" : " items"}):{" "}
         <span className="font-bold">{formatToINR(totalPrice)}</span>
@@ -73,10 +67,10 @@ const Cart = () => {
 
       <button>
         <Link
-          className="my-4 inline-flex items-center rounded-md bg-orange-700 px-6 py-1 font-medium text-white hover:opacity-75"
+          className="my-4 inline-flex items-center rounded-md bg-orange-700 px-6 py-2 font-medium text-white hover:opacity-75"
           to="/shop"
         >
-          Shop Now
+          Continue Shopping
         </Link>
       </button>
     </div>

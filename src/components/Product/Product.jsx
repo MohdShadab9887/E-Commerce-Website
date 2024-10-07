@@ -27,7 +27,7 @@ function Product(curElem) {
 
           <div className="mx-2 flex flex-row justify-between">
             <div className="hover:underline"> {name}</div>
-            <div className="text-cyan-600"> {formatToINR(price/10)}</div>
+            <div className="text-cyan-600"> {formatToINR(price / 10)}</div>
           </div>
         </div>
       </NavLink>

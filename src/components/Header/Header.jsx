@@ -6,8 +6,16 @@ import HamNav from "../HamNav/HamNav";
 import { useProductContext } from "../Context/Context";
 import Cart from "../Cart/Cart";
 import { useState, useEffect } from "react";
+// import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Header({ count, setCount }) {
+  const { loginWithRedirect, logout, isAuthenticated, user } =
+    useProductContext();
+  if (user) {
+    console.log(user);
+  }
+
   const { total } = useProductContext();
   const [cartTotal, setCartTotal] = useState(0);
 
@@ -34,42 +42,52 @@ export default function Header({ count, setCount }) {
             />
           </Link>
 
-          
+          <div className="flex items-center lg:order-2">
+            {isAuthenticated ? (
+              <div className="flex items-center">
+                <NavLink to="/profileInfo">
+                  <img
+                    className="h-10 rounded-full"
+                    src={user?.picture}
+                    alt={user.name}
+                  />
+                </NavLink>
 
-          <div className="flex items-center lg:order-2 ">
-            <Link
-              to="/LogIn"
-              className="mr-2 xs:hidden rounded-lg px-4 py-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
-            >
-              Log in
-            </Link>
-
-
-
+                <button
+                  className="rounded-lg py-2 pl-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+                  onClick={() =>
+                    logout({
+                      logoutParams: { returnTo: window.location.origin },
+                    })
+                  }
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <button
+                className="rounded-lg py-2 pl-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+                onClick={() => loginWithRedirect()}
+              >
+                Log In
+              </button>
+            )}
 
             <Link
               to="/cart"
-              className="focus:ring-4 relative mr-2 rounded-lg border-black px-4 text-sm font-medium text-orange-700 focus:outline-none focus:ring-orange-300 lg:px-5 lg:py-2.5"
+              className="relative mr-2 rounded-lg border-black px-2 text-sm font-medium text-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-300 lg:px-5 lg:py-2.5"
             >
               <FaCartShopping size="1.5em" />
-              <div className="absolute -top-3 right-0  h-4 w-4 rounded-full bg-white  text-center font-bold text-orange-700 sm:-top-2 sm:right-1 md:-top-2 md:right-1 lg:right-2 lg:top-[0]">
+              <div className="absolute -top-4 right-0 h-4 w-4 rounded-full bg-white text-center font-bold text-orange-700 sm:-top-2 sm:right-1 md:-top-2 md:right-1 lg:right-2 lg:top-[0]">
                 {total ? total : ""}
               </div>
             </Link>
-
-
             <div className="hidden text-orange-700 xs:block">
-            <button onClick={onHamClick}>
-              <RxHamburgerMenu size="1.5em" />
-            </button>
+              <button onClick={onHamClick}>
+                <RxHamburgerMenu size="1.5em" />
+              </button>
+            </div>
           </div>
-
-          </div>
-
-
-
-          
-
 
           <div
             className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"

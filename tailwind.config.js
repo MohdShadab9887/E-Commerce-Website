@@ -5,6 +5,7 @@ export default {
     extend: {
       screens: {
         xs: { min: "120px", max: "639px" },
+        md2: { min: "640px", max: "900px" },
       },
     },
   },

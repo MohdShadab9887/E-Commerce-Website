@@ -39,7 +39,9 @@ const SinglePage = () => {
     value.setCount((prevCount) => Number(prevCount) - 1);
   }
 
-  const [currImg, setCurrImg] = useState(data?.image ? data.image[0].url : null);
+  const [currImg, setCurrImg] = useState(
+    data?.image ? data.image[0].url : null,
+  );
 
   if (isLoading) {
     return (
@@ -51,25 +53,23 @@ const SinglePage = () => {
 
   // Function to add product to the cart
   const addToCart = () => {
-    if(value.count >= 1){
-
-    const product = {
-      id: data.id,
-      name: data.name,
-      image: data.image,
-      price: data.price,
-      quantity: value.count,
-      company: data.company,
+    if (value.count >= 1) {
+      const product = {
+        id: data.id,
+        name: data.name,
+        image: data.image,
+        price: data.price,
+        quantity: value.count,
+        company: data.company,
+      };
+      setCart((prevCart) => [...prevCart, product]);
+    } else {
+      <div>Add at least 1 product</div>;
     }
-    setCart((prevCart) => [...prevCart, product]);
-  }else{
-    <div>Add at least 1 product</div>
-  }
-
   };
-// if (data) {
-//   console.log(data)
-// }
+  // if (data) {
+  //   console.log(data)
+  // }
   return (
     <div className="my-4 flex h-full items-center justify-center">
       <div className="text-center">
@@ -158,7 +158,6 @@ const SinglePage = () => {
               <p>
                 {data.stock && (
                   <span className="text-red-600">
-                    
                     Only {data.stock} left in stock
                   </span>
                 )}
@@ -175,27 +174,26 @@ const SinglePage = () => {
               <div className="mt-2">Add to cart :</div>
 
               <button
-                className="mr-4 w-14 bg-orange-600 px-4 text-lg font-bold text-white  disabled:bg-orange-400 disabled:cursor-not-allowed"
+                className="mr-4 w-14 bg-orange-600 px-4 text-lg font-bold text-white disabled:cursor-not-allowed disabled:bg-orange-400"
                 onClick={minus}
                 disabled={value.count <= 1}
-
               >
                 -
               </button>
-              {value.count }
+              {value.count}
               <button
-                className="ml-4 w-14 bg-orange-600 px-4 text-lg font-bold text-white disabled:bg-orange-400 disabled:cursor-not-allowed"
+                className="ml-4 w-14 bg-orange-600 px-4 text-lg font-bold text-white disabled:cursor-not-allowed disabled:bg-orange-400"
                 onClick={add}
-                disabled={value.count === data.stock  || data.stock < 1}
+                disabled={value.count === data.stock || data.stock < 1}
               >
                 +
               </button>
               <div>
                 <NavLink to="/cart">
                   <button
-                    className="mt-2 bg-orange-600 disabled:line-through disabled:bg-orange-400 disabled:cursor-not-allowed p-1 px-4 text-lg font-bold text-white"
+                    className="mt-2 bg-orange-600 p-1 px-4 text-lg font-bold text-white disabled:cursor-not-allowed disabled:bg-orange-400 disabled:line-through"
                     onClick={addToCart}
-                    disabled={value.count < 1 }
+                    disabled={value.count < 1}
                   >
                     ADD TO CART
                   </button>

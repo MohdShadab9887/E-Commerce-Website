@@ -13,6 +13,7 @@ import Cart from "./components/Cart/Cart.jsx";
 import SignUp from "./components/SignUp/SignUp.jsx";
 import Error from "./components/Error/Error.jsx";
 import SinglePage from "./components/SinglePage/SinglePage.jsx";
+import ProfileInfo from "./components/ProfileInfo/ProfileInfo.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: "/signup", element: <SignUp /> },
       { path: "*", element: <Error /> },
       { path: "/singlepage/:id", element: <SinglePage /> },
+      { path: "/profileInfo", element: <ProfileInfo /> },
     ],
   },
 ]);

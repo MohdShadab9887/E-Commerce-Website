@@ -7,6 +7,7 @@ import {
 } from "react";
 import axios from "axios";
 import reducer from "../ProductReducer/ProductReducer";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // Creating contexts
 const counterContext = createContext();
@@ -63,6 +64,10 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("MKstorage", JSON.stringify(cart));
   }, [cart]);
 
+  useEffect(() => {
+    document.title = "E-Commerce Website";
+  }, []);
+
   const formatToINR = (amount) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -74,17 +79,22 @@ const AppProvider = ({ children }) => {
   const total = cart.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
 
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  useEffect(() => {
-    console.log(cart)
-  }, [cart])
-  
+  const { loginWithRedirect } = useAuth0();
+  const { logout } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  // const [profile, setProfile] = useState([])
+
+  // if (user) {
+  //   setProfile(user)
+  // }
 
   return (
     <AppContext.Provider
@@ -96,6 +106,10 @@ const AppProvider = ({ children }) => {
         total,
         totalPrice,
         removeFromCart,
+        loginWithRedirect,
+        logout,
+        isAuthenticated,
+        user,
       }}
     >
       {children}
