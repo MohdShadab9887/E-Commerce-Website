@@ -2,6 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaCartShopping } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { IoMdClose } from "react-icons/io";
 import HamNav from "../HamNav/HamNav";
 import { useProductContext } from "../Context/Context";
 import Cart from "../Cart/Cart";
@@ -18,16 +19,10 @@ export default function Header({ count, setCount }) {
 
   const { total } = useProductContext();
   const [cartTotal, setCartTotal] = useState(0);
+  const [isHamOpen, setIsHamOpen] = useState(false);
 
   const onHamClick = () => {
-    <div className="h-screen w-screen bg-black">
-      <Link
-        to="/LogIn"
-        className="mr-2 rounded-lg px-4 py-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
-      >
-        Log in
-      </Link>
-    </div>;
+    setIsHamOpen(!isHamOpen);
   };
 
   return (
@@ -54,7 +49,7 @@ export default function Header({ count, setCount }) {
                 </NavLink>
 
                 <button
-                  className="rounded-lg py-2 pl-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+                  className="rounded-lg py-2 pl-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5 xs:hidden"
                   onClick={() =>
                     logout({
                       logoutParams: { returnTo: window.location.origin },
@@ -66,7 +61,7 @@ export default function Header({ count, setCount }) {
               </div>
             ) : (
               <button
-                className="rounded-lg py-2 pl-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+                className="rounded-lg py-2 pl-2 text-sm font-bold text-orange-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5 xs:hidden"
                 onClick={() => loginWithRedirect()}
               >
                 Log In
@@ -82,15 +77,19 @@ export default function Header({ count, setCount }) {
                 {total ? total : ""}
               </div>
             </Link>
-            <div className="hidden text-orange-700 xs:block">
+            <div className="hidden w-[30px] text-orange-700 xs:block">
               <button onClick={onHamClick}>
-                <RxHamburgerMenu size="1.5em" />
+                {isHamOpen ? (
+                  <IoMdClose size="1.8em" />
+                ) : (
+                  <RxHamburgerMenu size="1.5em" />
+                )}
               </button>
             </div>
           </div>
 
           <div
-            className="hidden w-full items-center justify-between lg:order-1 lg:flex lg:w-auto"
+            className={`w-full items-center justify-between lg:order-1 lg:flex lg:w-auto ${isHamOpen ? "" : "hidden"}`}
             id="mobile-menu-2"
           >
             <ul className="mt-4 flex flex-col font-medium lg:mt-0 lg:flex-row lg:space-x-8">
@@ -146,16 +145,37 @@ export default function Header({ count, setCount }) {
                 </NavLink>
               </li>
 
-              {/* <li>
-                                <NavLink
-                                to="github"
-                                    className={({isActive}) =>
-                                        `block py-2 pr-4 pl-3 duration-200 ${isActive?"text-orange-700":"text-slate-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-orange-700 lg:p-0`
-                                    }
-                                >
-                                    GitHub
-                                </NavLink>
-                            </li> */}
+              <li className="hidden xs:block">
+                {isAuthenticated ? (
+                  <div className="flex items-center">
+                    <NavLink to="/profileInfo">
+                      <img
+                        className="h-10 rounded-full"
+                        src={user?.picture}
+                        alt={user.name}
+                      />
+                    </NavLink>
+
+                    <button
+                      className="rounded-lg py-2 pl-2 text-sm font-bold text-slate-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+                      onClick={() =>
+                        logout({
+                          logoutParams: { returnTo: window.location.origin },
+                        })
+                      }
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    className="rounded-lg py-2 pl-3 text-sm font-bold text-slate-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-300 lg:px-5 lg:py-2.5"
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Log In
+                  </button>
+                )}
+              </li>
             </ul>
           </div>
         </div>
