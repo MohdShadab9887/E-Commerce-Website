@@ -2,6 +2,7 @@ import { React, useContext, useState, useEffect } from "react";
 import { useProductContext } from "../Context/Context";
 import Product from "../Product/Product";
 import { counterContext } from "/src/components/Context/Context.jsx";
+import { CiSearch } from "react-icons/ci";
 
 function Shop() {
   let value = useContext(counterContext);
@@ -22,7 +23,7 @@ function Shop() {
 
   if (isLoading) {
     return (
-      <div className="text-center text-[30px] font-thin">
+      <div className="m-auto flex h-[80vh] w-[80vw] items-center justify-center text-center text-[30px] font-thin">
         <span> Loading Please Wait...</span>
       </div>
     );
@@ -53,15 +54,25 @@ function Shop() {
 
   return (
     <div>
-      <div className="m-auto flex h-16 w-5/6 items-center justify-between rounded px-10 xs:h-24 xs:flex-col xs:justify-evenly">
+      <div className="m-auto flex h-16 w-5/6 items-center justify-between scroll-smooth rounded px-10 xs:h-24 xs:flex-col xs:justify-evenly">
+        
+        
+        <div className="flex text-gray-400 rounded-lg border-2 outline-none items-center pl-2 ">
+        <label htmlFor="text"
+        className=" "
+        >
+          <CiSearch />
+        </label>
         <input
+        id="text"
           type="text"
           name="text"
           placeholder="Search"
           value={searchText}
           onChange={handleSearchText}
-          className="h-[35px] w-[250px] rounded-lg border-2 p-2 outline-none"
+          className="h-[35px] w-[250px] rounded-lg p-2 outline-none"
         />
+        </div>
         <form className="mt-0 rounded-md border p-1" action="#">
           <label
             className="mr-2 border-none text-sm font-semibold"
@@ -109,8 +120,7 @@ function Shop() {
         </form>
       </div>
 
-      <div className="flex justify-center">
-        <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center">
           {sortedData.length > 0 ? (
             sortedData.map((product) => {
               return <Product key={product.id} {...product} />;
@@ -119,7 +129,6 @@ function Shop() {
             <p>No products found.</p>
           )}
         </div>
-      </div>
     </div>
   );
 }

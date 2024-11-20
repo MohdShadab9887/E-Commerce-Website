@@ -11,15 +11,14 @@ import {
   counterContext,
 } from "/src/components/Context/Context.jsx";
 
+import LocomotiveScroll from 'locomotive-scroll';
+
+
 function App() {
   const [count, setCount] = useState("0");
-  // const [profile, setProfile] = useState()
-  // useEffect(() => {
+  const locomotiveScroll = new LocomotiveScroll();
 
-  // setprofile(user)
-  // console.log(profile)
-  // }, [user])
-
+  
   return (
     <>
       <Auth0Provider

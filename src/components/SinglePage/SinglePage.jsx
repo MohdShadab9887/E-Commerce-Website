@@ -5,6 +5,7 @@ import { TbTruckDelivery, TbReplaceFilled } from "react-icons/tb";
 import { MdOutlineSecurity } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { counterContext } from "/src/components/Context/Context.jsx";
+import { div } from "motion/react-client";
 
 const SinglePage = () => {
   const { isLoading, formatToINR, cart, setCart } = useProductContext();
@@ -53,23 +54,47 @@ const SinglePage = () => {
 
   // Function to add product to the cart
   const addToCart = () => {
-    if (value.count >= 1) {
-      const product = {
-        id: data.id,
-        name: data.name,
-        image: data.image,
-        price: data.price,
-        quantity: value.count,
-        company: data.company,
-      };
-      setCart((prevCart) => [...prevCart, product]);
-    } else {
-      <div>Add at least 1 product</div>;
-    }
-  };
-  // if (data) {
-  //   console.log(data)
-  // }
+      let currentQuantity = 0;
+    
+      // Find the current quantity of the item in the cart, if it exists
+      cart.forEach((item) => {
+        if (item.id === id) {
+          currentQuantity = item.quantity;
+        }
+      });
+    
+      // Check if adding the desired quantity exceeds the stock
+      if (currentQuantity + value.count <= data.stock) {
+        console.log("Added to cart");
+    
+        setCart((prevCart) => {
+          const existingItemIndex = prevCart.findIndex((item) => item.id === id);
+    
+          if (existingItemIndex !== -1) {
+            // Update the quantity if the item exists
+            return prevCart.map((item, index) =>
+              index === existingItemIndex
+                ? { ...item, quantity: item.quantity + value.count }
+                : item
+            );
+          } else {
+            // Add a new item to the cart
+            const product = {
+              id: data.id,
+              name: data.name,
+              image: data.image,
+              price: data.price,
+              quantity: value.count,
+              company: data.company,
+            };
+            return [...prevCart, product];
+          }
+        });
+      } else {
+        alert("Cannot add more items. Stock limit reached.");
+      }
+    };
+  
   return (
     <div className="my-4 flex h-full items-center justify-center">
       <div className="text-center">
@@ -91,9 +116,7 @@ const SinglePage = () => {
                   </figure>
                 ))
               ) : (
-                <div>
-                  <span>Loading images, Please Wait...</span>
-                </div>
+                <div className="text-gray-500">No images available.</div>
               )}
             </div>
             <div className="mr-4 flex items-center justify-center">
@@ -191,12 +214,15 @@ const SinglePage = () => {
               <div>
                 <NavLink to="/cart">
                   <button
-                    className="mt-2 bg-orange-600 p-1 px-4 text-lg font-bold text-white disabled:cursor-not-allowed disabled:bg-orange-400 disabled:line-through"
+                    className="mt-2 bg-orange-600 p-1 px-4 text-lg font-bold text-white disabled:cursor-not-allowed disabled:bg-orange-400"
                     onClick={addToCart}
                     disabled={value.count < 1}
                   >
                     ADD TO CART
                   </button>
+                  {value.count < 1 && (
+                    <p className="text-red-500">Please add at least 1 item.</p>
+                  )}
                 </NavLink>
               </div>
             </div>

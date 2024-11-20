@@ -14,6 +14,7 @@ const Cart = () => {
       </div>
     );
   }
+  // console.log(cart)
 
   return (
     <div className="flex flex-col items-center">
