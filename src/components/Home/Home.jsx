@@ -35,7 +35,7 @@ export default function Home() {
         <div className="absolute inset-0 h-full w-full pt-12 sm:my-20 sm:pt-1">
           <img
             className="w-96"
-            src="https://i.ibb.co/5BCcDYB/Remote2.png"
+            src="https://images.prismic.io/etvasweb/9f37552b-3a13-4a4c-b1d5-5461a9caf2aa_Remote2.png"
             alt="image1"
           />
         </div>
@@ -44,7 +44,7 @@ export default function Home() {
       <div className="grid place-items-center sm:mt-20">
         <img
           className="w-48 sm:w-96"
-          src="https://i.ibb.co/2M7rtLk/Remote1.png"
+          src="https://images.prismic.io/etvasweb/15dc1049-7eb2-4f82-baf8-3ebe59ed4998_Remote1.png"
           alt="image2"
         />
       </div>
